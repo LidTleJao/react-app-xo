@@ -42,7 +42,7 @@ function HistoryAiPage() {
   };
 
   const navigateToTTTPage = () => {
-    navigate("/");
+    navigate("/TicTacToeAiPage");
   };
 
   return (
