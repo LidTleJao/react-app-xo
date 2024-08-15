@@ -7,12 +7,11 @@ import SquarePage from "../Square/Square";
 
 function generateWinningCombos(size: number): number[][] {
   const combos: number[][] = [];
-  // Your existing winning combos code
   return combos;
 }
 
 function HistoryAiPage() {
-  const { id } = useParams(); // Get the game ID from the URL
+  const { id } = useParams();
   const [size, setSize] = useState(3);
   const [gameState, setGameState] = useState(Array(size * size).fill(""));
   const [winningCombos, setWinningCombos] = useState(generateWinningCombos(size));
@@ -39,7 +38,7 @@ function HistoryAiPage() {
   }, [id]);
 
   const handleCellClick = (index: number) => {
-    // Handle cell click if needed
+    return ;
   };
 
   const navigateToTTTPage = () => {

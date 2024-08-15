@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import "./page/Tic-tac-toe/tic-tac-toe.css"
 import TTTPage from "./page/Tic-tac-toe/tic-tac-toe";
 import TTTAIPage from "./page/Tic-tac-toe-Ai/tic-tac-toe-ai";
 import HistoryPage from "./page/History/History";

@@ -27,11 +27,6 @@ import { useNavigate } from "react-router-dom";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseconfig/firebase";
 
-// type Scores = {
-//   [key: string]: number;
-// };
-
-// const INITIAL_SCORES: Scores = { X: 0, O: 0 };
 
 function generateWinningCombos(size: number): number[][] {
   const combos: number[][] = [];
@@ -86,7 +81,6 @@ function TTTAIPage() {
   const [gameHistory, setGameHistory] = useState<Game[]>([]);
   const [gameState, setGameState] = useState(Array(size * size).fill(""));
   const [currentPlayer, setCurrentPlayer] = useState("X");
-  // const [scores, setScores] = useState(INITIAL_SCORES);
   const [isAIGame, setIsAIGame] = useState(true);
 
   const navigate = useNavigate();
@@ -118,12 +112,11 @@ function TTTAIPage() {
   };
 
   const handleOkByHistory = () => {
-    // setSize(tempSize);
     setOpenbyHistory(false);
   };
 
   const handleClickOpenSetSize = () => {
-    setTempSize(size); // Set tempSize to the current size before opening the dialog
+    setTempSize(size);
     setOpen(true);
   };
 
@@ -158,7 +151,7 @@ function TTTAIPage() {
             size: data.size,
             winner: data.winner,
           } as Game;
-        }); // อธิบายว่า games ควรเป็น Game[]
+        });
         setGameHistory(games);
       } catch (error) {
         console.error("Error fetching game history: ", error);
@@ -167,12 +160,6 @@ function TTTAIPage() {
     fetchGameHistory();
   }, []);
 
-  // useEffect(() => {
-  //   const storedScores = localStorage.getItem("scores");
-  //   if (storedScores) {
-  //     setScores(JSON.parse(storedScores));
-  //   }
-  // }, []);
 
   useEffect(() => {
     if (gameState.every((cell) => cell === "")) {
@@ -191,13 +178,6 @@ function TTTAIPage() {
   const handleWin = async () => {
     window.alert(`Player ${currentPlayer}! You are the winner!`);
 
-    // const newPlayerScore = scores[currentPlayer] + 1;
-    // const newScores = { ...scores };
-    // newScores[currentPlayer] = newPlayerScore;
-    // setScores(newScores);
-    // localStorage.setItem("scores", JSON.stringify(newScores));
-
-    // Save game data to Firestore
     await addDoc(collection(db, "history-tictactoe-ai-game"), {
       board: gameState,
       size: size,
@@ -471,7 +451,7 @@ function TTTAIPage() {
                     <Select
                       labelId="demo-dialog-select-label"
                       id="demo-dialog-select"
-                      value={tempSize.toString()} // Bind value to tempSize
+                      value={tempSize.toString()}
                       onChange={handleChange}
                       input={<OutlinedInput label="Size" />}
                     >
@@ -535,9 +515,6 @@ function TTTAIPage() {
                       >
                         <ListItemText
                           primary={`Size: ${game.size}, Player Winner: ${game.winner}`}
-                          // secondary={`Date: ${new Date(
-                          //   game.date.getTime() * 1000
-                          // ).toLocaleString()}`}
                         />
                       </ListItem>
                     ))}
@@ -553,10 +530,7 @@ function TTTAIPage() {
           <div
             className="grid gap-2 mx-auto"
             style={{
-              width: Math.min(
-                (90 * window.innerWidth) / 100,
-                (90 * window.innerHeight) / 100
-              ),
+              width: `min(120vw, 120vh)`,
               gridTemplateColumns: `repeat(${size}, 1fr)`,
               gridTemplateRows: `repeat(${size}, 1fr)`,
             }}

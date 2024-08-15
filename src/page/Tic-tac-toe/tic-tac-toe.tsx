@@ -25,13 +25,9 @@ import HistoryIcon from "@mui/icons-material/History";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useNavigate } from "react-router-dom";
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import { db } from "D:/AllFileWork/react-app-xo/src/firebaseconfig/firebase.ts";
+import { db } from "../../firebaseconfig/firebase";
 
-// type Scores = {
-//   [key: string]: number;
-// };
 
-// const INITIAL_SCORES: Scores = { X: 0, O: 0 };
 //การสร้างตารางวิธีการชนะ คำนวนตามตารางที่เปลี่ยนไป
 function generateWinningCombos(size: number): number[][] {
   const combos: number[][] = [];
@@ -86,7 +82,6 @@ function TTTPage() {
   const [openbyHistory, setOpenbyHistory] = React.useState(false);
   const [gameState, setGameState] = useState(Array(size * size).fill(""));
   const [currentPlayer, setCurrentPlayer] = useState("X");
-  // const [scores, setScores] = useState(INITIAL_SCORES);
 
   const navigate = useNavigate();
 
@@ -112,7 +107,7 @@ function TTTPage() {
   };
 
   const handleClickOpenSetSize = () => {
-    setTempSize(size); // Set tempSize to the current size before opening the dialog
+    setTempSize(size);
     setOpen(true);
   };
 
@@ -126,7 +121,6 @@ function TTTPage() {
   };
 
   const handleOkByHistory = () => {
-    // setSize(tempSize);
     setOpenbyHistory(false);
   };
 
@@ -170,7 +164,7 @@ function TTTPage() {
             size: data.size,
             winner: data.playerwinner,
           } as Game;
-        }); // อธิบายว่า games ควรเป็น Game[]
+        });
         setGameHistory(games);
       } catch (error) {
         console.error("Error fetching game history: ", error);
@@ -184,13 +178,6 @@ function TTTPage() {
     navigate(`/HistoryPlayerPage/${id}`);
   };
 
-  //บันทึก scores player x และ player o
-  useEffect(() => {
-    const storedScores = localStorage.getItem("scores");
-    if (storedScores) {
-      // setScores(JSON.parse(storedScores));
-    }
-  }, []);
   //การสร้างเกม tic tac toe
   useEffect(() => {
     if (gameState.every((cell) => cell === "")) {
@@ -209,13 +196,8 @@ function TTTPage() {
   const handleWin = () => {
     window.alert(`player ${currentPlayer}! You are the winner!`);
 
-    // const newPlayerScore = scores[currentPlayer] + 1;
-    // const newScores = { ...scores };
-    // newScores[currentPlayer] = newPlayerScore;
-    // setScores(newScores);
-    // localStorage.setItem("scores", JSON.stringify(newScores));
 
-    saveGameDataToFirestore(gameState, size, currentPlayer); // บันทึกข้อมูล
+    saveGameDataToFirestore(gameState, size, currentPlayer);
 
     resetBoard();
   };
@@ -450,9 +432,6 @@ function TTTPage() {
                       >
                         <ListItemText
                           primary={`Size: ${game.size}, Player Winner: ${game.winner}`}
-                          // secondary={`Date: ${new Date(
-                          //   game.date.getTime() * 1000
-                          // ).toLocaleString()}`}
                         />
                       </ListItem>
                     ))}
@@ -468,9 +447,9 @@ function TTTPage() {
           <div
             className="grid gap-2 mx-auto"
             style={{
-              width: `min(90vw, 90vh)`, // ขนาดของตารางพอดีกับหน้าจอ
+              width: `min(120vw, 120vh)`,
               gridTemplateColumns: `repeat(${size}, 1fr)`,
-              gridTemplateRows: `repeat(${size}, 1fr)`, // ให้แถวแต่ละแถวมีขนาดเท่ากับคอลัมน์
+              gridTemplateRows: `repeat(${size}, 1fr)`,
             }}
           >
             {gameState.map((player, index) => (
