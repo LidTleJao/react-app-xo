@@ -13,22 +13,29 @@
 
 ### 1. Clone Project
 
+```
 git clone https://github.com/LidTleJao/react-app-xo.git
 cd react-app-xo
+```
 
 ### 2. Install MUI
 
+```
 npm install @mui/material @emotion/react @emotion/styled
 npm install @mui/icons-material
 npm install @mui/system
+```
 
 ### 3. Install Tailwind
 
+```
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
+```
 
 ### 4. เข้าไปที่ไฟล์ tailwind.config.js แก้ในส่วนของ content
 
+```
 /** @type {import('tailwindcss').Config} */ 
 export default {
 	content: [ 
@@ -40,21 +47,28 @@ export default {
 	}, 
 	plugins: [], 
 }
+```
 
 ### 5. แล้วเข้าไปที่ไฟล์ ./src/index.css แล้วเพิ่ม
 
+```
 @tailwind base; 
 @tailwind components; 
 @tailwind utilities;
+```
 
 ### 6. Install Firebase
 
+```
 npm install firebase
 npm install -g firebase-tools
+```
 
 ### 7. Test Run Program
 
+```
 npm run dev
+```
 
 ## Feature
 
